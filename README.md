@@ -78,3 +78,8 @@ typing_extensions      4.14.1
 typing-inspection      0.4.1
 urllib3                2.5.0
 wcwidth                0.2.13
+
+
+brew install ffmpeg  # Mac
+sudo apt install ffmpeg  # Ubuntu/Debian
+choco install ffmpeg  # Windows (if using Chocolatey)

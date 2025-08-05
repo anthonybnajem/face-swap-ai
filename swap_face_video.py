@@ -1,4 +1,5 @@
 import os
+import subprocess
 import cv2
 import time
 import numpy as np
@@ -10,6 +11,7 @@ from numpy.linalg import norm
 VIDEO_PATH = "target_video_short_2.mp4"
 SOURCE_IMAGE = "your_face.jpg"
 OUTPUT_VIDEO = "output.mp4"
+FINAL_OUTPUT = "output_with_audio.mp4"
 DETECTED_DIR = "detected_faces"
 N_FRAMES_SCAN = 500
 EMBEDDING_SIMILARITY_THRESHOLD = 0.4  # Adjust to control uniqueness
@@ -122,4 +124,26 @@ while True:
 
 cap.release()
 out.release()
+
+
 print(f"\n✅ Done! Output saved to `{OUTPUT_VIDEO}`")
+
+
+ffmpeg_cmd = [
+    "ffmpeg",
+    "-y",  # Overwrite if exists
+    "-i", OUTPUT_VIDEO,
+    "-i", VIDEO_PATH,
+    "-map", "0:v:0",
+    "-map", "1:a:0",
+    "-c:v", "libx264",
+    "-c:a", "copy",
+    "-movflags", "+faststart",
+    FINAL_OUTPUT
+]
+
+try:
+    subprocess.run(ffmpeg_cmd, check=True)
+    print(f"\n✅ Final video with audio saved as `{FINAL_OUTPUT}`")
+except subprocess.CalledProcessError as e:
+    print(f"\n❌ FFmpeg audio merge failed: {e}")
