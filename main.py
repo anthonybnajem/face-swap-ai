@@ -149,7 +149,7 @@ def run_swap_job(job_id: str, req: SwapRequest):
         cap = cv2.VideoCapture(video_path)
         unique_faces = []
         threshold = 0.8
-        N_FRAMES_SCAN = 300
+        N_FRAMES_SCAN = 500
         face_counter = 0
 
         for scan_idx in range(N_FRAMES_SCAN):
